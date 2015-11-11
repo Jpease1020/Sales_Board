@@ -1,6 +1,6 @@
 require "rails_helper"
 
-describe "logged in user is directed to thier sales show page", type: :feature do
+describe "logged in salesperson is directed to thier sales show page", type: :feature do
 
   before(:each) do
     visit '/'
@@ -13,8 +13,10 @@ describe "logged in user is directed to thier sales show page", type: :feature d
   describe "as a sales person, when I log in" do
 
     it "takes me to my show page where I can see my current sales summary for the month" do
-
-    assert current_path
+    assert sales_path, current_path
     end
+
+    
   end
+
 end
