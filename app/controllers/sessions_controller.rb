@@ -5,11 +5,14 @@ class SessionsController < ApplicationController
   def create
     user = User.find_by(name: params[:user][:name])
     if user && user.authenticate(params[:user][:password])
-      session[:id] = user.id
+      log_in(user)
       redirect_to sales_path
     else
       render "new"
     end
+  end
+
+  def destroy
   end
 
 end
