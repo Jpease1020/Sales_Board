@@ -1,6 +1,6 @@
 class SalesController < ApplicationController
 
   def index
-    @sales = Sale.all
+    @sales = Sale.where(user_id: session[:id])
   end
 end
