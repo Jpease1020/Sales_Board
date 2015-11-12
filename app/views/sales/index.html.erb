@@ -1,4 +1,47 @@
-<% @sales.each do |sale|%>
-  <%= sale.id %>
-  <%= sale.user.name%>
-<% end %>
+<table style="width:100%">
+  <thead>Current Sales Summary for <%= current_user.name %> for the month of <%= Time.now.strftime("%B") %></thead>
+  <br>
+  <br>
+  <tr>
+    <td>Sales Person</td>
+    <td>Time Submited</td>
+    <td>Pages</td>
+    <td>Quantity</td>
+    <td>Job Title</td>
+    <td>Job Type</td>
+    <td>Sale Amount</td>
+    <td>Customer</td>
+    <td>Mark Up</td>
+    <td>Frequency</td>
+    <td>Sinlge Sale Amt</td>
+    <td>Annual Sales</td>
+    <% @sales.each do |sale|%>
+    <tr>
+      <td><%=sale.user.name%></td>
+      <td><%=sale.created_at.strftime("%^b %d, %Y, %l:%M:%p")%></td>
+      <td><%=sale.pages%></td>
+      <td><%=sale.quantity%></td>
+      <td><%=sale.job_title%></td>
+      <td><%=sale.job_type%></td>
+      <td><%=number_to_currency(sale.amount)%></td>
+      <td><%=sale.customer%></td>
+      <td><%=sale.mark_up%> % </td>
+      <td><%=sale.frequency%></td>
+      <td><%=number_to_currency(sale.single_sale)%></td>
+      <td><%=number_to_currency((sale.frequency * sale.single_sale))%></td>
+    </tr>
+    <% end %>
+    <tr>
+      <td>Month Totals</td>
+      <td><%=Time.now.strftime("%B")%></td>
+      </td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+</table>
