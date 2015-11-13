@@ -15,7 +15,7 @@
   </tr>
     <%= form_for @sale, url: sale_path, method: :patch do |f| %>
     <tr>
-      <td><%= f.text_field :user_id%></td>
+      <td><%=  @sale.user.name %></td>
       <td><%= f.text_field :pages%></td>
       <td><%= f.text_field :quantity%></td>
       <td><%= f.text_field :job_title%></td>

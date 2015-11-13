@@ -1,9 +1,29 @@
-Choose month to view sales
+<%=flash[:alert]%>
+<tabel>
+  <h3> Add a new Sale </h3>
+  <tr>
+    <%= form_for @sale, url: sales_path do |f| %>
+    <td><%= f.text_field :user_id, placeholder: "salesperson id"  %></td>
+    <td><%= f.text_field :pages, placeholder: "pages" %></td>
+    <td><%= f.text_field :quantity, placeholder: "quantity"%></td>
+    <td><%= f.text_field :job_title, placeholder: "job title"%></td>
+    <td><%= f.text_field :job_type, placeholder: "job type"%></td>
+    <td><%= f.text_field :amount, placeholder: "amount"%></td>
+    <td><%= f.text_field :customer, placeholder: "customer"%></td>
+    <td><%= f.text_field :mark_up, placeholder: "mark up"%></td>
+    <td><%= f.text_field :frequency, placeholder: "frequency"%></td>
+    <td><%= f.text_field :single_sale, placeholder: "single sale"%></td>
+    <%= f.submit %>
+    <% end %>
+  </tr>
+</table>
+<br>
+<br>
+Choose month to view sales      ***PUT DROP DOWN HERE****
+
 
 <table style="width:100%">
-  <thead>Current Sales Summary for <%= current_user.name %> for the month of <%= Time.now.strftime("%B") %></thead>
-  <br>
-  <br>
+  <thead><h3>Current Sales Summary for <%= current_user.name %> for the month of <%= Time.now.strftime("%B") %><h3></thead>
   <tr>
     <td>Sales Person/Id</td>
     <td>Time Submited</td>
@@ -18,7 +38,7 @@ Choose month to view sales
     <td>Sinlge Sale Amt</td>
     <td>Annual Sales</td>
   </tr>
-    <% @sales.each do |sale|%>
+    <%@sales.each do |sale|%>
     <tr>
       <td><%=sale.user.name%> / <%=sale.user_id%></td>
       <td><%=sale.created_at.strftime("%^b %d, %Y, %l:%M:%p")%></td>
@@ -32,13 +52,13 @@ Choose month to view sales
       <td><%=sale.frequency%></td>
       <td><%=number_to_currency(sale.single_sale)%></td>
       <td><%=number_to_currency((sale.frequency * sale.single_sale))%></td>
-      <td><%= link_to "edit", edit_sale_path(sale) %> </td>
+      <td><%=link_to "edit", edit_sale_path(sale) %> </td>
+      <td><%=link_to "delete", sale_path(sale), method: :delete %></td>
     </tr>
     <% end %>
     <tr>
       <td>Month Totals</td>
       <td><%=Time.now.strftime("%B")%></td>
-      </td>
       <td></td>
       <td></td>
       <td></td>
@@ -47,5 +67,8 @@ Choose month to view sales
       <td></td>
       <td></td>
       <td></td>
+      <td><%=number_to_currency(@sales.sum(:single_sale))%></td>
+      <td><%=number_to_currency(@sales.sum("single_sale * frequency"))%></td>
     </tr>
 </table>
+      <%=number_to_currency(@sales.where(job_type: "web").sum("single_sale * frequency"))%>

@@ -1,7 +1,21 @@
 class SalesController < ApplicationController
 
   def index
-    @sales = Sale.where('extract(month  from created_at) = ? and user_id = ?', Time.now.month, session[:user_id])
+    @sale = Sale.new
+    @months = ["January", "February", "March", "April"]
+    session[:month] = params[:month] if params[:month]
+    month_variable = session[:month] || Time.now.month
+    @sales = Sale.where('extract(month  from created_at) = ? and user_id = ?', month_variable, session[:user_id])
+  end
+
+  def create
+    @sale = Sale.new(sale_params)
+    if @sale.save
+      redirect_to action: 'index'
+    else
+      flash[:alert] = "sale not saved please enter all the information correctly"
+      redirect_to action: 'index'
+    end
   end
 
   def edit
@@ -17,13 +31,17 @@ class SalesController < ApplicationController
     end
   end
 
+  def destroy
+    sale = Sale.find(params[:id])
+    sale.destroy
+  end
 
 
   private
 
   def sale_params
     params.require(:sale).permit( :user_id, :pages, :quantity, :job_title,
-                                  :job_title, :amount, :customer, :mark_up,
+                                  :job_type, :amount, :customer, :mark_up,
                                   :frequency, :single_sale)
   end
 
