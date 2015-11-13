@@ -1,5 +1,5 @@
 <%=flash[:alert]%>
-<tabel>
+<table>
   <h3> Add a new Sale </h3>
   <tr>
     <%= form_for @sale, url: sales_path do |f| %>
@@ -27,48 +27,76 @@ Choose month to view sales      ***PUT DROP DOWN HERE****
   <tr>
     <td>Sales Person/Id</td>
     <td>Time Submited</td>
-    <td>Pages</td>
-    <td>Quantity</td>
     <td>Job Title</td>
     <td>Job Type</td>
-    <td>Sale Amount</td>
-    <td>Customer</td>
-    <td>Mark Up</td>
-    <td>Frequency</td>
-    <td>Sinlge Sale Amt</td>
-    <td>Annual Sales</td>
+    <td align="right">Pages</td>
+    <td align="right">Quantity</td>
+    <td align="right">Sale Amount</td>
+    <td align="right">Customer</td>
+    <td align="right">Mark Up</td>
+    <td align="right">Frequency</td>
+    <td align="right">Sinlge Sale Amt</td>
+    <td align="right">Annual Sales</td>
   </tr>
     <%@sales.each do |sale|%>
     <tr>
       <td><%=sale.user.name%> / <%=sale.user_id%></td>
       <td><%=sale.created_at.strftime("%^b %d, %Y, %l:%M:%p")%></td>
-      <td><%=sale.pages%></td>
-      <td><%=sale.quantity%></td>
       <td><%=sale.job_title%></td>
       <td><%=sale.job_type%></td>
-      <td><%=number_to_currency(sale.amount)%></td>
-      <td><%=sale.customer%></td>
-      <td><%=sale.mark_up%> % </td>
-      <td><%=sale.frequency%></td>
-      <td><%=number_to_currency(sale.single_sale)%></td>
-      <td><%=number_to_currency((sale.frequency * sale.single_sale))%></td>
-      <td><%=link_to "edit", edit_sale_path(sale) %> </td>
-      <td><%=link_to "delete", sale_path(sale), method: :delete %></td>
+      <td align="right"><%=sale.pages%></td>
+      <td align="right"><%=sale.quantity%></td>
+      <td align="right"><%=number_to_currency(sale.amount)%></td>
+      <td align="right"><%=sale.customer%></td>
+      <td align="right"><%=sale.mark_up%> % </td>
+      <td align="right"><%=sale.frequency%></td>
+      <td align="right"><%=number_to_currency(sale.single_sale)%></td>
+      <td align="right"><%=number_to_currency((sale.frequency * sale.single_sale))%></td>
+      <td align="right"><%=link_to "edit", edit_sale_path(sale) %> </td>
+      <td align="right"><%=link_to "delete", sale_path(sale), method: :delete %></td>
     </tr>
     <% end %>
     <tr>
-      <td>Month Totals</td>
-      <td><%=Time.now.strftime("%B")%></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td><%=number_to_currency(@sales.sum(:single_sale))%></td>
-      <td><%=number_to_currency(@sales.sum("single_sale * frequency"))%></td>
+      <td><strong>Web Sale Totals</strong></td>
+      <td align="right"></td>
+      <td align="right"></td>
+      <td align="right"></td>
+      <td align="right"></td>
+      <td align="right"></td>
+      <td align="right"></td>
+      <td align="right"></td>
+      <td align="right"></td>
+      <td align="right"></td>
+      <td align="right"><strong><%=number_to_currency(@sales.where(job_type: "web").sum(:single_sale))%></strong></td>
+      <td align="right"><strong><%=number_to_currency(@sales.where(job_type: "web").sum("single_sale * frequency"))%></strong></td>
     </tr>
+    <tr>
+      <td><strong>Digital Sale Totals</strong></td>
+      <td align="right"></td>
+      <td align="right"></td>
+      <td align="right"></td>
+      <td align="right"></td>
+      <td align="right"></td>
+      <td align="right"></td>
+      <td align="right"></td>
+      <td align="right"></td>
+      <td align="right"></td>
+      <td align="right"><strong><%=number_to_currency(@sales.where(job_type: "digital").sum(:single_sale))%></strong></td>
+      <td align="right"><strong><%=number_to_currency(@sales.where(job_type: "digital").sum("single_sale * frequency"))%></strong></td>
+    </tr>
+    <tr>
+      <td><h2>Total Sales</h2></td>
+      <td></td>
+      <td align="right"></td>
+      <td align="right"></td>
+      <td align="right"></td>
+      <td align="right"></td>
+      <td align="right"></td>
+      <td align="right"></td>
+      <td align="right"></td>
+      <td align="right"></td>
+      <td align="right"><strong><%=number_to_currency(@sales.sum(:single_sale))%></strong></td>
+      <td align="right"><strong><%=number_to_currency(@sales.sum("single_sale * frequency"))%></strong></td>
+    </tr>
+
 </table>
-      <%=number_to_currency(@sales.where(job_type: "web").sum("single_sale * frequency"))%>

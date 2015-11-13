@@ -5,7 +5,7 @@ class SalesController < ApplicationController
     @months = ["January", "February", "March", "April"]
     session[:month] = params[:month] if params[:month]
     month_variable = session[:month] || Time.now.month
-    @sales = Sale.where('extract(month  from created_at) = ? and user_id = ?', month_variable, session[:user_id])
+    @sales = Sale.where('extract(month  from created_at) = ? and user_id = ?', month_variable, session[:user_id]).order(created_at: :desc)
   end
 
   def create
