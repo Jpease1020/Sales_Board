@@ -1,7 +1,7 @@
 class SalesController < ApplicationController
 
   def index
-    @display_month = params[:date][:month] || Time.now.strftime("%B")
+    @display_month = (params[:date][:month] || Time.now.strftime("%B"))
     @salespeople = User.where(role: 1)
     month_variable = Date::MONTHNAMES.index(@display_month)
     if current_user.salesperson?
