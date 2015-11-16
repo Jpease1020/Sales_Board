@@ -8,4 +8,16 @@ class User < ActiveRecord::Base
                     uniqueness: { case_sensitive: false }
   validates :password, presence: true, length: { minimum: 8 }, allow_nil: true
   has_many :sales
+
+  def salesperson?
+    role == 1
+  end
+
+  def assistant?
+    role == 2
+  end
+
+  def admin?
+    role == 3
+  end
 end

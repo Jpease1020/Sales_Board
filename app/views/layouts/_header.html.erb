@@ -1,0 +1,8 @@
+<li>
+<% if logged_in? %>
+<%= link_to "Log out", logout_path, method: "delete" %>
+<% elsif logged_out? %>
+<h1>Welcome to the Sales Board</h1>
+<h4>Please <%= link_to "log in", login_path %></h4>
+<% end %>
+</li>

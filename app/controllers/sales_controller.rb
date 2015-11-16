@@ -1,11 +1,19 @@
 class SalesController < ApplicationController
 
   def index
-    @sale = Sale.new
-    @months = ["January", "February", "March", "April"]
-    session[:month] = params[:month] if params[:month]
+    @salespeople = User.where(role: 1)
     month_variable = session[:month] || Time.now.month
-    @sales = Sale.where('extract(month  from created_at) = ? and user_id = ?', month_variable, session[:user_id]).order(created_at: :desc)
+    if current_user.salesperson?
+      @sale = Sale.new
+      # session[:month] = params[:month] if params[:month]
+      @sales = Sale.where('extract(month  from created_at) = ? and user_id = ?', month_variable, current_user.id).order(created_at: :desc)
+    elsif current_user.assistant?
+      @sale = Sale.new
+      @sales = Sale.where('extract(month  from created_at) = ?', month_variable).where(user_id: [10, 12]).order(created_at: :desc)
+    elsif current_user.admin?
+      @sale = Sale.new
+    #
+    end
   end
 
   def create
