@@ -18,12 +18,16 @@
 <br>
 <br>
 
-Choose month to view sales      ***PUT DROP DOWN HERE****
-<%= collection_select(:sale, :created_at, Sale.all, :created_at, :created_at) %>
+Choose month to view sales
+<%= form_for :date, url: sales_path, method: "get" do |f| %>
+  <%= f.select :month, months, :selected => @display_month %>
+  <%= f.select :year, years, :selected => Time.now.strftime("%Y")%>
+  <%= f.submit "Choose Month/Year"%>
+<% end %>
 
 <table>
     <tr>
-      <td><h2>Total Sales for <%= Time.now.strftime("%B") %></h2></td>
+      <td><h2>Total Sales for <%= @display_month %></h2></td>
       <td align="right"><strong><%=number_to_currency(@sales.sum(:single_sale), :precision => 0)%></strong></td>
       <td align="right"><strong><%=number_to_currency(@sales.sum("single_sale * frequency"), :precision => 0)%></strong></td>
     </tr>
@@ -40,7 +44,7 @@ Choose month to view sales      ***PUT DROP DOWN HERE****
 </table>
 <br>
 <table style="width:100%">
-  <thead><h3>Current Sales Summary for <%= current_user.name %> for the month of <%= Time.now.strftime("%B") %><h3></thead>
+  <thead><h3>Current Sales Summary for <%= current_user.name %> for the month of <%= @display_month %><h3></thead>
   <tr>
     <td>Id - Sales Person</td>
     <td>Date</td>
@@ -50,7 +54,7 @@ Choose month to view sales      ***PUT DROP DOWN HERE****
     <td align="right">Pages</td>
     <td align="right">Customer</td>
     <td align="right">Mark Up</td>
-    <td align="right">Sinlge Sale Amt</td>
+    <td align="right">Single Sale Amt</td>
     <td align="right">Frequency</td>
     <td align="right">Annual Sales</td>
   </tr>

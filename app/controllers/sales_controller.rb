@@ -1,8 +1,9 @@
 class SalesController < ApplicationController
 
   def index
+    @display_month = params[:date][:month] || Time.now.strftime("%B")
     @salespeople = User.where(role: 1)
-    month_variable = session[:month] || Time.now.month
+    month_variable = Date::MONTHNAMES.index(@display_month)
     if current_user.salesperson?
       @sale = Sale.new
       # session[:month] = params[:month] if params[:month]
@@ -12,7 +13,6 @@ class SalesController < ApplicationController
       @sales = Sale.where('extract(month  from created_at) = ?', month_variable).where(user_id: [10, 12]).order(created_at: :desc)
     elsif current_user.admin?
       @sale = Sale.new
-    #
     end
   end
 
