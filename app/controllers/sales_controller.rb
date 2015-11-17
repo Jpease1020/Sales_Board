@@ -5,18 +5,12 @@ class SalesController < ApplicationController
       @display_month = Time.now.strftime("%B")
     else
       @display_month = params[:date][:month]
-     end
+    end
     @salespeople = User.where(role: 1)
     @sale = Sale.new
-    assistants_salespeople = User.where(assistant_id: current_user.id)
-    month_variable = Date::MONTHNAMES.index(@display_month)
-    if current_user.salesperson?
-      @sales = Sale.where('extract(month  from created_at) = ? and user_id = ?', month_variable, current_user.id).order(created_at: :desc)
-    elsif current_user.assistant?
-      @sales = Sale.where('extract(month  from created_at) = ?', month_variable).where(user_id: assistants_salespeople).order(created_at: :desc)
-    elsif current_user.admin?
-      @sales = Sale.where('extract(month  from created_at) = ?', month_variable).order(created_at: :desc)
-    end
+
+    @names = assistants_salespeople.pluck(:name)
+    sales_for_display
   end
 
   def create
@@ -59,5 +53,19 @@ class SalesController < ApplicationController
   def sale_month
     month = params[:month]
     Time.now
+  end
+
+  def month_variable
+    Date::MONTHNAMES.index(@display_month)
+  end
+
+  def sales_for_display
+    if current_user.salesperson?
+      @sales = Sale.where('extract(month  from created_at) = ? and user_id = ?', month_variable, current_user.id).order(created_at: :desc)
+    elsif current_user.assistant?
+      @sales = Sale.where('extract(month  from created_at) = ?', month_variable).where(user_id: assistants_salespeople).order(created_at: :desc)
+    elsif current_user.admin?
+      @sales = Sale.where('extract(month  from created_at) = ?', month_variable).order(created_at: :desc)
+    end
   end
 end

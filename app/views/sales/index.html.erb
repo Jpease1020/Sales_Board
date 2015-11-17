@@ -25,6 +25,12 @@ Choose month to view sales
   <%= f.submit "Choose Month/Year"%>
 <% end %>
 
+Choose salesperson to view sales
+<%= form_for :date, url: sales_path, method: "get" do |f| %>
+  <%= f.select :user, @names %>
+  <%= f.submit "Salesperson"%>
+<% end %>
+
 <table>
     <h2>Total Sales for <%= @display_month %></h2>
     <tr>

@@ -26,4 +26,10 @@ class ApplicationController < ActionController::Base
     session[:user_id] == nil
   end
 
+  def assistants_salespeople
+    User.where(assistant_id: current_user.id)
+  end
+
+
+
 end
