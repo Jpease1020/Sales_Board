@@ -25,11 +25,18 @@ Choose month to view sales
   <%= f.submit "Choose Month/Year"%>
 <% end %>
 
+Choose salesperson to view sales
+<%= form_for :date, url: sales_path, method: "get" do |f| %>
+  <%= f.select :user, @names %>
+  <%= f.submit "Salesperson"%>
+<% end %>
+
 <table>
+    <h2>Total Sales for <%= @display_month %></h2>
     <tr>
-      <td><h2>Total Sales for <%= @display_month %></h2></td>
-      <td align="right"><strong><%=number_to_currency(@sales.sum(:single_sale), :precision => 0)%></strong></td>
-      <td align="right"><strong><%=number_to_currency(@sales.sum("single_sale * frequency"), :precision => 0)%></strong></td>
+      <td></td>
+      <td>Single Sale Total</td>
+      <td>Annual Sale Total</td>
     </tr>
     <tr>
       <td><strong>Web Sale Totals</strong></td>
@@ -41,10 +48,20 @@ Choose month to view sales
       <td align="right"><strong><%=number_to_currency(@sales.where(job_type: "digital").sum(:single_sale), :precision => 0)%></strong></td>
       <td align="right"><strong><%=number_to_currency(@sales.where(job_type: "digital").sum("single_sale * frequency"), :precision => 0)%></strong></td>
     </tr>
+    <tr>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td><h3><strong>All Sales</strong></h3></td>
+      <td align="right"><strong><%=number_to_currency(@sales.sum(:single_sale), :precision => 0)%></strong></td>
+      <td align="right"><strong><%=number_to_currency(@sales.sum("single_sale * frequency"), :precision => 0)%></strong></td>
+    </tr>
 </table>
 <br>
 <table style="width:100%">
-  <thead><h3>Current Sales Summary for <%= current_user.name %> for the month of <%= @display_month %><h3></thead>
+  <thead><h3>Current Sales Summary for chose salespeople for the month of <%= @display_month %><h3></thead>
   <tr>
     <td>Id - Sales Person</td>
     <td>Date</td>

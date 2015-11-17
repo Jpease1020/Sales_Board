@@ -6,7 +6,7 @@ class SessionsController < ApplicationController
     user = User.find_by(name: params[:user][:name])
     if user && user.authenticate(params[:user][:password])
       log_in(user)
-      if user.role == !3
+      if user.role < 3
         redirect_to sales_path
       else
         redirect_to admin_home_path

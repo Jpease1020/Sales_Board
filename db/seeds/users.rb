@@ -25,21 +25,6 @@ User.create!(name:  "Boss",
             #  activated_at: Time.zone.now
             )
 
-20.times do |n|
-  name  = Faker::Name.name
-  email_name = name.gsub(" ", "")
-  email = "#{email_name}@email.com"
-  password = "password"
-  User.create!(name:  name,
-               email: email,
-               password:              password,
-               password_confirmation: password,
-               role: 1
-              #  activated: true,
-              #  activated_at: Time.zone.now
-               )
-end
-
 5.times do |n|
   name  = Faker::Name.name
   email_name = name.gsub(" ", "")
@@ -50,6 +35,23 @@ end
                password:              password,
                password_confirmation: password,
                role: 2
+              #  activated: true,
+              #  activated_at: Time.zone.now
+               )
+end
+
+20.times do |n|
+  name  = Faker::Name.name
+  email_name = name.gsub(" ", "")
+  email = "#{email_name}@email.com"
+  password = "password"
+  assistant_id = rand(4..8)
+  User.create!(name:  name,
+               email: email,
+               password:              password,
+               password_confirmation: password,
+               role: 1,
+               assistant_id: assistant_id
               #  activated: true,
               #  activated_at: Time.zone.now
                )
