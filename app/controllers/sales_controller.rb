@@ -12,9 +12,8 @@ class SalesController < ApplicationController
       @sale = Sale.new
       @sales = Sale.where('extract(month  from created_at) = ? and user_id = ?', month_variable, current_user.id).order(created_at: :desc)
     elsif current_user.assistant?
-      @assistants_salespeople = Assistant.find(current_user).users
       @sale = Sale.new
-      @sales = Sale.where('extract(month  from created_at) = ?', month_variable).where(user_id: @assistants_salespeople).order(created_at: :desc)
+      @sales = Sale.where('extract(month  from created_at) = ?', month_variable).where(user_id: [11,13]).order(created_at: :desc)
     elsif current_user.admin?
       @sale = Sale.new
     end
