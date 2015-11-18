@@ -8,7 +8,6 @@
           <tr>
             <%= form_for :user, url: admin_users_path do |f| %>
             <td><%= f.text_field :name, placeholder: "name" %></td>
-            <td><%= f.text_field :email, placeholder: "email"%></td>
             <td><%= f.collection_select :assistant_id, @assistants, :id, :name, :prompt => 'Select Assistant' %></td>
             <td><%= f.password_field :password, placeholder: "password" %></td>
             <td><%= f.password_field :password_confirmation, placeholder: "confirm password" %></td>
@@ -30,7 +29,6 @@
           <tr>
             <%= form_for :user, url: admin_users_path do |f| %>
             <td><%= f.text_field :name, placeholder: "name" %></td>
-            <td><%= f.text_field :email, placeholder: "email"%></td>
             <td><%= f.password_field :password, placeholder: "password" %></td>
             <td><%= f.password_field :password_confirmation, placeholder: "confirm password" %></td>
             <td>
@@ -50,13 +48,11 @@
         <table style="width:100%">
           <tr>
             <th>Name</th>
-            <th>Email</th>
             <th>Assistant</th>
           </tr>
           <% @salespeople.each do |s| %>
           <tr>
             <td><%= s.name %></td>
-            <td><%= s.email %></td>
             <td><%= s.assistant_name %></td>
             <td><%= link_to "edit", edit_admin_user_path(s) %></td>
             <td><%= link_to "View Sales", admin_user_path(s) %></td>
@@ -76,13 +72,11 @@
         <table style="width:100%">
           <tr>
             <td>Name</th>
-            <td>Email</th>
             <td>Salespeople</th>
           </tr>
           <% @assistants.each do |a| %>
           <tr>
             <td><%= a.name %></td>
-            <td><%= a.email %></td>
             <td><%= link_to "edit", edit_admin_user_path(a) %></td>
             <% end %>
           </tr>
