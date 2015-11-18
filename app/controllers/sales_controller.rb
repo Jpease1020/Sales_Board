@@ -39,6 +39,7 @@ class SalesController < ApplicationController
   def destroy
     sale = Sale.find(params[:id])
     sale.destroy
+    redirect_to :back
   end
 
 

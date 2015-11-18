@@ -75,7 +75,7 @@ Choose salesperson to view sales
     <td align="right">Frequency</td>
     <td align="right">Annual Sales</td>
   </tr>
-    <%@sales.each do |sale|%>
+    <% @sales.each do |sale|%>
     <tr>
       <td><%=sale.user_id%> - <%=sale.user.name%></td>
       <td><%=sale.created_at.strftime("%^b %d, %Y")%></td>

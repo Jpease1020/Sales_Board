@@ -8,12 +8,15 @@ class Admin::UsersController < Admin::BaseController
 
   def index
     @salespeople = User.where(role: 1)
+    @assistants = User.where(role: 2)
   end
 
   def show
+    @user = User.find_by(id: params[:id])
   end
 
   def edit
+    @assistants = User.where(role: 2)
     @user = User.find(params[:id])
   end
 
@@ -28,6 +31,6 @@ class Admin::UsersController < Admin::BaseController
 
   private
   def update_user_params
-    params.require(:user).permit(:name, :email, :password, :password_confirmation)
+    params.require(:user).permit(:name, :email, :assistant_id, :password, :password_confirmation)
   end
 end

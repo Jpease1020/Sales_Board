@@ -20,4 +20,9 @@ class User < ActiveRecord::Base
   def admin?
     role == 3
   end
+
+  def assistant_name
+    User.find_by(id: self.assistant_id).name
+  end
+
 end
