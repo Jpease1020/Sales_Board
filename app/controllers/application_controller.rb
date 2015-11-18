@@ -13,8 +13,6 @@ class ApplicationController < ActionController::Base
   end
 
   def log_out
-    # session.delete(:user_id)
-    # @current_user = nil
     session.clear
   end
 
@@ -26,11 +24,7 @@ class ApplicationController < ActionController::Base
     session[:user_id] == nil
   end
 
-  def assistants_salespeople
-    User.where(assistant_id: current_user.id)
-  end
-
-  def sales_for_display
+    def sales_for_display
     if current_user.salesperson?
       @sales = Sale.where('extract(month  from created_at) = ? and user_id = ?', month_variable, current_user.id).order(created_at: :desc)
     elsif current_user.assistant?
@@ -59,7 +53,19 @@ class ApplicationController < ActionController::Base
     @salespeople = User.where(role: 1)
   end
 
+  def assistants_salespeople
+    User.where(assistant_id: current_user.id)
+  end
+
   def assistants_salespeoples_names
     @names = assistants_salespeople.pluck(:name)
+  end
+
+  def user_for_new_sale_dropdown
+    if current_user.admin?
+      User.find_by(id: params[:id]).name
+    else
+      current_user.name
+    end
   end
 end

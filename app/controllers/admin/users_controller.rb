@@ -4,6 +4,11 @@ class Admin::UsersController < Admin::BaseController
   end
 
   def create
+    user = User.new(user_params)
+    unless user.save
+      flash[:error] = "The salesperson was not created, please try again"
+    end
+    redirect_to action: 'index'
   end
 
   def index
@@ -12,11 +17,10 @@ class Admin::UsersController < Admin::BaseController
   end
 
   def show
-    display_month
-    @names = assistants_salespeople.pluck(:name)
-    @sales = Sale.where('extract(month  from created_at) = ? and user_id = ?', month_variable, params[:id]).order(created_at: :desc)
     @sale = Sale.new
     @salespeople = User.where(role: 1)
+    display_month
+    @sales = Sale.where('extract(month  from created_at) = ? and user_id = ?', month_variable, params[:id]).order(created_at: :desc)
     @user = User.find_by(id: params[:id])
   end
 
@@ -35,7 +39,7 @@ class Admin::UsersController < Admin::BaseController
   end
 
   private
-  def update_user_params
+  def user_params
     params.require(:user).permit(:name, :email, :assistant_id, :password, :password_confirmation)
   end
 end

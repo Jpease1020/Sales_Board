@@ -25,15 +25,14 @@
               <td><%= f.text_field :pages%></td>
               <td><%= f.text_field :quantity%></td>
               <td><%= f.text_field :job_title%></td>
-              <td><%= f.text_field :job_type%></td>
-              <td><%= f.text_field :amount%></td>
+              <td><%= f.text_field :job_type%></td> 
               <td><%= f.text_field :customer%></td>
               <td><%= f.text_field :mark_up%></td>
               <td><%= f.text_field :frequency%></td>
               <td><%= f.text_field :single_sale%></td>
               <td><%=number_to_currency((@sale.frequency * @sale.single_sale))%></td>
             </tr>
-            <%= f.submit "Update Sale", class: => "btn btn-primary"%>
+            <%= f.submit "Update Sale", :class => "btn btn-primary"%>
             <% end %>
         </table>
       </div>

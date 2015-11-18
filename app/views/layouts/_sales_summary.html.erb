@@ -2,11 +2,11 @@
   <div class='col-md-12'>
     <div class='panel'>
       <div class='panel-body'>
-        <table style="width:100%">
+        <table>
           <h3> Add a new Sale </h3>
           <tr>
             <%= form_for @sale, url: sales_path do |f| %>
-            <th><%= f.collection_select :user_id, @salespeople, :id, :name, :prompt => User.find_by(id: params[:id]).name %></th>
+            <th><%= f.collection_select :user_id, @salespeople, :id, :name, :prompt => "Select Salesperson" %></th>
             <th><%= f.select :job_type, ["web", "digital"]%></th>
             <th><%= f.text_field :job_title, placeholder: "job title"%></th>
             <th><%= f.text_field :quantity, placeholder: "quantity"%></th>
@@ -15,7 +15,7 @@
             <th><%= f.text_field :mark_up, placeholder: "mark up"%></th>
             <th><%= f.text_field :single_sale, placeholder: "single sale"%></th>
             <th><%= f.text_field :frequency, placeholder: "frequency"%></th>
-            <%= f.submit %>
+            <%= f.submit "Create Sale", class: "btn btn-primary btn-sm" %>
             <% end %>
           </tr>
         </table>

@@ -1,17 +1,16 @@
 class SalesController < ApplicationController
 
   def index
+    @sale = Sale.new
     display_month
     salespeople
-    @sale = Sale.new
-
     assistants_salespeoples_names
     sales_for_display
   end
 
   def create
-    @sale = Sale.new(sale_params)
-    if @sale.save
+    sale = Sale.new(sale_params)
+    if sale.save
       redirect_to action: 'index'
     else
       flash[:alert] = "sale not saved please enter all the information correctly"

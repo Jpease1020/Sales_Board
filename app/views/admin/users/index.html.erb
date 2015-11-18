@@ -3,6 +3,7 @@
     <div class='panel'>
       <div class='panel-body'>
         <table style="width:100%">
+          <div> <%= flash[:error] if flash[:error] %> </div>
           <h3> Create a new Salesperson </h3>
           <tr>
             <%= form_for :user, url: admin_users_path do |f| %>
