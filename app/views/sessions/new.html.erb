@@ -1,12 +1,33 @@
-<li>
+<div class='row'>
+  <div class='col-md-12'>
+    <div class='panel'>
+      <div class='panel-body'>
+        <div class="row">
+          <div class='col-md-4'>
+          </div>
+          <div class='col-md-4'>
+            <table style="width:50%">
+              <%= form_for :user do |f| %>
+              <%= f.text_field :name, placeholder: "User Name", autofocus: true %>
+              <%= f.password_field :password, placeholder: "Password" %>
+              <%= f.submit "Login", class: "btn btn-primary" %>
+              <% end %>
+            </table>
+          </div>
+          <div class='col-md-4'>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<br>
+<br>
+<br>
+<br>
+<br>
+<div>
 *******DELETE THIS.... just using this to log in*****
 Sales person Selina Pfannerstill
 Assisstant  Tristian Kassulke  Rosie Goodwin id: 5
-</li>
-Welcome Sales Person please login
-
-<%= form_for :user do |f| %>
-<%= f.text_field :name, placeholder: "User Name", autofocus: true %>
-<%= f.password_field :password, placeholder: "Password" %>
-<%= f.submit "Login" %>
-<% end %>
+</div>

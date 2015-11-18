@@ -1,95 +1,118 @@
-<table>
-  <h3> Add a new Sale </h3>
-  <tr>
-    <%= form_for @sale, url: sales_path do |f| %>
-    <td><%= f.collection_select :user_id, @salespeople, :id, :name %></td>
-    <td><%= f.select :job_type, ["web", "digital"]%></td>
-    <td><%= f.text_field :job_title, placeholder: "job title"%></td>
-    <td><%= f.text_field :quantity, placeholder: "quantity"%></td>
-    <td><%= f.text_field :pages, placeholder: "pages" %></td>
-    <td><%= f.text_field :customer, placeholder: "customer"%></td>
-    <td><%= f.text_field :mark_up, placeholder: "mark up"%></td>
-    <td><%= f.text_field :single_sale, placeholder: "single sale"%></td>
-    <td><%= f.text_field :frequency, placeholder: "frequency"%></td>
-    <%= f.submit %>
-    <% end %>
-  </tr>
-</table>
+<div class='row'>
+  <div class='col-md-12'>
+    <div class='panel'>
+      <div class='panel-body'>
+        <table style="width:100%">
+          <h3> Add a new Sale </h3>
+          <tr>
+            <%= form_for @sale, url: sales_path do |f| %>
+            <th><%= f.collection_select :user_id, @salespeople, :id, :name %></th>
+            <th><%= f.select :job_type, ["web", "digital"]%></th>
+            <th><%= f.text_field :job_title, placeholder: "job title"%></th>
+            <th><%= f.text_field :quantity, placeholder: "quantity"%></th>
+            <th><%= f.text_field :pages, placeholder: "pages" %></th>
+            <th><%= f.text_field :customer, placeholder: "customer"%></th>
+            <th><%= f.text_field :mark_up, placeholder: "mark up"%></th>
+            <th><%= f.text_field :single_sale, placeholder: "single sale"%></th>
+            <th><%= f.text_field :frequency, placeholder: "frequency"%></th>
+            <%= f.submit, class: "btn btn-primary" %>
+            <% end %>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
 <br>
-<br>
-
-Choose month to view sales
-<%= form_for :date, url: sales_path, method: "get" do |f| %>
-  <%= f.select :month, months, :selected => @display_month %>
-  <%= f.select :year, years, :selected => Time.now.strftime("%Y")%>
-  <%= f.submit "Choose Month/Year"%>
-<% end %>
-
-Choose salesperson to view sales
-<%= form_for :date, url: sales_path, method: "get" do |f| %>
-  <%= f.select :user, @names %>
-  <%= f.submit "Salesperson"%>
-<% end %>
-
-<table>
-    <h2>Total Sales for <%= @display_month %></h2>
-    <tr>
-      <td></td>
-      <td>Single Sale Total</td>
-      <td>Annual Sale Total</td>
-    </tr>
-    <tr>
-      <td><strong>Web Sale Totals</strong></td>
-      <td align="right"><strong><%=number_to_currency(@sales.where(job_type: "web").sum(:single_sale), :precision => 0)%></strong></td>
-      <td align="right"><strong><%=number_to_currency(@sales.where(job_type: "web").sum("single_sale * frequency"), :precision => 0)%></strong></td>
-    </tr>
-    <tr>
-      <td><strong>Digital Sale Totals</strong></td>
-      <td align="right"><strong><%=number_to_currency(@sales.where(job_type: "digital").sum(:single_sale), :precision => 0)%></strong></td>
-      <td align="right"><strong><%=number_to_currency(@sales.where(job_type: "digital").sum("single_sale * frequency"), :precision => 0)%></strong></td>
-    </tr>
-    <tr>
-      <td></td>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><h3><strong>All Sales</strong></h3></td>
-      <td align="right"><strong><%=number_to_currency(@sales.sum(:single_sale), :precision => 0)%></strong></td>
-      <td align="right"><strong><%=number_to_currency(@sales.sum("single_sale * frequency"), :precision => 0)%></strong></td>
-    </tr>
-</table>
-<br>
-<table style="width:100%">
-  <thead><h3>Current Sales Summary for chose salespeople for the month of <%= @display_month %><h3></thead>
-  <tr>
-    <td>Id - Sales Person</td>
-    <td>Date</td>
-    <td>Job Type</td>
-    <td>Job Title</td>
-    <td align="right">Quantity</td>
-    <td align="right">Pages</td>
-    <td align="right">Customer</td>
-    <td align="right">Mark Up</td>
-    <td align="right">Single Sale Amt</td>
-    <td align="right">Frequency</td>
-    <td align="right">Annual Sales</td>
-  </tr>
-    <% @sales.each do |sale|%>
-    <tr>
-      <td><%=sale.user_id%> - <%=sale.user.name%></td>
-      <td><%=sale.created_at.strftime("%^b %d, %Y")%></td>
-      <td><%=sale.job_type%></td>
-      <td><%=sale.job_title%></td>
-      <td align="right"><%=sale.quantity%></td>
-      <td align="right"><%=sale.pages%></td>
-      <td align="right"><%=sale.customer%></td>
-      <td align="right"><%=sale.mark_up%> % </td>
-      <td align="right"><%=number_to_currency(sale.single_sale)%></td>
-      <td align="right"><%=sale.frequency%></td>
-      <td align="right"><%=number_to_currency((sale.frequency * sale.single_sale), :precision => 0)%></td>
-      <td align="right"><%=link_to "edit", edit_sale_path(sale) %> </td>
-      <td align="right"><%=link_to "delete", sale_path(sale), method: :delete %></td>
-    </tr>
-    <% end %>
-</table>
+<div>
+  Choose month to view sales
+  <%= form_for :date, url: sales_path, method: "get" do |f| %>
+    <%= f.select :month, months, :selected => @display_month %>
+    <%= f.select :year, years, :selected => Time.now.strftime("%Y")%>
+    <%= f.submit "Choose Month/Year", class: "btn btn-primary"%>
+  <% end %>
+</div>
+<div>
+  Choose salesperson to view sales
+  <%= form_for :date, url: sales_path, method: "get" do |f| %>
+    <%= f.select :user, @names %>
+    <%= f.submit "Salesperson", class: "btn btn-primary"%>
+  <% end %>
+</div>
+<div class='row'>
+  <div class='col-md-12'>
+    <div class='panel'>
+      <div class='panel-body'>
+        <table style="width:100%">
+          <h2>Total Sales for <%= @display_month %></h2>
+          <tr>
+            <th></th>
+            <th>Single Sale Total</th>
+            <th>Annual Sale Total</th>
+          </tr>
+          <tr>
+            <td><strong>Web Sale Totals</strong></td>
+            <td align="right"><strong><%=number_to_currency(@sales.where(job_type: "web").sum(:single_sale), :precision => 0)%></strong></td>
+            <td align="right"><strong><%=number_to_currency(@sales.where(job_type: "web").sum("single_sale * frequency"), :precision => 0)%></strong></td>
+          </tr>
+          <tr>
+            <td><strong>Digital Sale Totals</strong></td>
+            <td align="right"><strong><%=number_to_currency(@sales.where(job_type: "digital").sum(:single_sale), :precision => 0)%></strong></td>
+            <td align="right"><strong><%=number_to_currency(@sales.where(job_type: "digital").sum("single_sale * frequency"), :precision => 0)%></strong></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+              <td><h3><strong>All Sales</strong></h3></td>
+              <td align="right"><strong><%=number_to_currency(@sales.sum(:single_sale), :precision => 0)%></strong></td>
+              <td align="right"><strong><%=number_to_currency(@sales.sum("single_sale * frequency"), :precision => 0)%></strong></td>
+            </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+<div class='row'>
+  <div class='col-md-12'>
+    <div class='panel'>
+      <div class='panel-body'>
+        <table style="width:100%">
+          <thead><h3>Current Sales Summary for chose salespeople for the month of <%= @display_month %><h3></thead>
+            <tr>
+              <th>Id - Sales Person</th>
+              <th>Date</th>
+              <th>Job Type</th>
+              <th>Job Title</th>
+              <th align="right">Quantity</th>
+              <th align="right">Pages</th>
+              <th align="right">Customer</th>
+              <th align="right">Mark Up</th>
+              <th align="right">Single Sale Amt</th>
+              <th align="right">Frequency</th>
+              <th align="right">Annual Sales</th>
+            </tr>
+              <% @sales.each do |sale|%>
+            <tr>
+              <td><%=sale.user_id%> - <%=sale.user.name%></td>
+              <td><%=sale.created_at.strftime("%^b %d, %Y")%></td>
+              <td><%=sale.job_type%></td>
+              <td><%=sale.job_title%></td>
+              <td align="right"><%=sale.quantity%></td>
+              <td align="right"><%=sale.pages%></td>
+              <td align="right"><%=sale.customer%></td>
+              <td align="right"><%=sale.mark_up%> % </td>
+              <td align="right"><%=number_to_currency(sale.single_sale)%></td>
+              <td align="right"><%=sale.frequency%></td>
+              <td align="right"><%=number_to_currency((sale.frequency * sale.single_sale), :precision => 0)%></td>
+              <td align="right"><%=link_to "edit", edit_sale_path(sale) %> </td>
+              <td align="right"><%=link_to "delete", sale_path(sale), method: :delete %></td>
+            </tr>
+              <% end %>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

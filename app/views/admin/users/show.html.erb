@@ -1,31 +1,39 @@
-<h3>Sales for <%=@user.name%> for the month of </h3>
-  <table style="width:100%">
-    <tr>
-      <td>Pages</td>
-      <td>Quantity</td>
-      <td>Job Title</td>
-      <td>Job Type</td>
-      <td>Sale Amount</td>
-      <td>Customer</td>
-      <td>Mark Up</td>
-      <td>Frequency</td>
-      <td>Sinlge Sale Amt</td>
-      <td>Annual Sales</td>
-    </tr>
-      <% @user.sales.each do |s| %>
-      <tr>
-        <td><%= s.pages %></td>
-        <td><%= s.quantity %></td>
-        <td><%= s.job_title %></td>
-        <td><%= s.job_type %></td>
-        <td><%= s.amount %></td>
-        <td><%= s.customer %></td>
-        <td><%= s.mark_up %></td>
-        <td><%= s.frequency %></td>
-        <td><%= s.single_sale %></td>
-        <td><%= number_to_currency((s.frequency * s.single_sale))%></td>
-        <td><%= link_to "edit sale", edit_sale_path(s) %>
-        <td><%= link_to "delete sale", sale_path(s), method: :delete %>
-      </tr>
-      <% end %>
-  </table>
+<div class='row'>
+  <div class='col-md-12'>
+    <div class='panel'>
+      <div class='panel-body'>
+        <table style="width:100%">
+          <h3>Sales for <%=@user.name%> for the month of </h3>
+            <tr>
+              <th>Pages</th>
+              <th>Quantity</th>
+              <th>Job Title</th>
+              <th>Job Type</th>
+              <th>Sale Amount</th>
+              <th>Customer</th>
+              <th>Mark Up</th>
+              <th>Frequency</th>
+              <th>Sinlge Sale Amt</th>
+              <th>Annual Sales</th>
+            </tr>
+            <% @user.sales.each do |s| %>
+            <tr>
+              <td><%= s.pages %></td>
+              <td><%= s.quantity %></td>
+              <td><%= s.job_title %></td>
+              <td><%= s.job_type %></td>
+              <td><%= s.amount %></td>
+              <td><%= s.customer %></td>
+              <td><%= s.mark_up %></td>
+              <td><%= s.frequency %></td>
+              <td><%= s.single_sale %></td>
+              <td><%= number_to_currency((s.frequency * s.single_sale))%></td>
+              <td><%= link_to "edit sale", edit_sale_path(s) %>
+              <td><%= link_to "delete sale", sale_path(s), method: :delete %>
+            </tr>
+            <% end %>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

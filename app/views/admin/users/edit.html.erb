@@ -1,10 +1,19 @@
-<tr>
-<%= form_for @user, url: admin_user_path do |f| %>
-<td><%= f.text_field :name, placeholder: "Name" %></td>
-<td><%= f.text_field :email, placeholder: "Email" %></td>
-<td><%= f.collection_select :assistant_id, @assistants, :id, :name, :prompt => 'Select Assistant' %></td>
-<td><%= f.text_field :password, placeholder: "Password" %></td>
-<td><%= f.text_field :password_confirmation, placeholder: "confirm password" %></td>
-<td><%= f.submit %></td>
-<% end %>
-</tr>
+<div class='row'>
+  <div class='col-md-12'>
+    <div class='panel'>
+      <div class='panel-body'>
+        <table style="width:100%">
+          <tr>
+          <%= form_for @user, url: admin_user_path do |f| %>
+          <td><%= f.text_field :name, placeholder: "Name" %></td>
+          <td><%= f.text_field :email, placeholder: "Email" %></td>
+          <td><%= f.collection_select :assistant_id, @assistants, :id, :name, :prompt => 'Select Assistant' %></td>
+          <td><%= f.text_field :password, placeholder: "Password" %></td>
+          <td><%= f.text_field :password_confirmation, placeholder: "confirm password" %></td>
+          <td class="btn btn-primary"><%= f.submit "Update" %></td>
+          <% end %>
+          </tr>
+      </div>
+    </div>
+  </div>
+</div>

@@ -24,6 +24,7 @@ class SalesController < ApplicationController
   end
 
   def edit
+    @salespeople = User.where(role: 1)
     @sale = Sale.find(params[:id])
   end
 

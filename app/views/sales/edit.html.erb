@@ -1,34 +1,42 @@
 <h3>Edit Sale Info for sale <%=@sale.id%></h3>
-<table style="width:100%">
-  <tr>
-    <td>Current Salesperson/Id</td>
-    <td>New Salesperson</td>
-    <td>Pages</td>
-    <td>Quantity</td>
-    <td>Job Title</td>
-    <td>Job Type</td>
-    <td>Sale Amount</td>
-    <td>Customer</td>
-    <td>Mark Up</td>
-    <td>Frequency</td>
-    <td>Sinlge Sale Amt</td>
-    <td>Annual Sales</td>
-  </tr>
-    <%= form_for @sale, url: sale_path, method: :patch do |f| %>
-    <tr>
-      <td><%=  @sale.user.name %></td>
-      <td><%= f.collection_select :user_id, @salespeople, :id, :name %></td>
-      <td><%= f.text_field :pages%></td>
-      <td><%= f.text_field :quantity%></td>
-      <td><%= f.text_field :job_title%></td>
-      <td><%= f.text_field :job_type%></td>
-      <td><%= f.text_field :amount%></td>
-      <td><%= f.text_field :customer%></td>
-      <td><%= f.text_field :mark_up%></td>
-      <td><%= f.text_field :frequency%></td>
-      <td><%= f.text_field :single_sale%></td>
-      <td><%=number_to_currency((@sale.frequency * @sale.single_sale))%></td>
-    </tr>
-    <%= f.submit "Update Sale"%>
-    <% end %>
-</table>
+<div class='row'>
+  <div class='col-md-12'>
+    <div class='panel'>
+      <div class='panel-body'>
+        <table style="width:100%">
+          <tr>
+            <th>Current Salesperson/Id</th>
+            <th>New Salesperson</th>
+            <th>Pages</th>
+            <th>Quantity</th>
+            <th>Job Title</th>
+            <th>Job Type</th>
+            <th>Sale Amount</th>
+            <th>Customer</th>
+            <th>Mark Up</th>
+            <th>Frequency</th>
+            <th>Sinlge Sale Amt</th>
+            <th>Annual Sales</th>
+          </tr>
+            <%= form_for @sale, url: sale_path, method: :patch do |f| %>
+            <tr>
+              <td><%=  @sale.user.name %></td>
+              <td><%= f.collection_select :user_id, @salespeople, :id, :name %></td>
+              <td><%= f.text_field :pages%></td>
+              <td><%= f.text_field :quantity%></td>
+              <td><%= f.text_field :job_title%></td>
+              <td><%= f.text_field :job_type%></td>
+              <td><%= f.text_field :amount%></td>
+              <td><%= f.text_field :customer%></td>
+              <td><%= f.text_field :mark_up%></td>
+              <td><%= f.text_field :frequency%></td>
+              <td><%= f.text_field :single_sale%></td>
+              <td><%=number_to_currency((@sale.frequency * @sale.single_sale))%></td>
+            </tr>
+            <%= f.submit "Update Sale", class: => "btn btn-primary"%>
+            <% end %>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
