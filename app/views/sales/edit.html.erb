@@ -7,29 +7,28 @@
           <tr>
             <th>Current Salesperson/Id</th>
             <th>New Salesperson</th>
-            <th>Pages</th>
-            <th>Quantity</th>
-            <th>Job Title</th>
             <th>Job Type</th>
-            <th>Sale Amount</th>
-            <th>Customer</th>
-            <th>Mark Up</th>
-            <th>Frequency</th>
-            <th>Sinlge Sale Amt</th>
-            <th>Annual Sales</th>
+            <th>Job Title</th>
+            <th align="right">Quantity</th>
+            <th align="right">Pages</th>
+            <th align="right">Customer</th>
+            <th align="right">Mark Up</th>
+            <th align="right">Single Sale Amt</th>
+            <th align="right">Frequency</th>
+            <th align="right">Annual Sales</th>
           </tr>
             <%= form_for @sale, url: sale_path, method: :patch do |f| %>
             <tr>
               <td><%=  @sale.user.name %></td>
               <td><%= f.collection_select :user_id, @salespeople, :id, :name %></td>
-              <td><%= f.text_field :pages%></td>
-              <td><%= f.text_field :quantity%></td>
+              <td><%= f.text_field :job_type%></td>
               <td><%= f.text_field :job_title%></td>
-              <td><%= f.text_field :job_type%></td> 
+              <td><%= f.text_field :quantity%></td>
+              <td><%= f.text_field :pages%></td>
               <td><%= f.text_field :customer%></td>
               <td><%= f.text_field :mark_up%></td>
-              <td><%= f.text_field :frequency%></td>
               <td><%= f.text_field :single_sale%></td>
+              <td><%= f.text_field :frequency%></td>
               <td><%=number_to_currency((@sale.frequency * @sale.single_sale))%></td>
             </tr>
             <%= f.submit "Update Sale", :class => "btn btn-primary"%>
