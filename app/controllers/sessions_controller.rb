@@ -1,5 +1,6 @@
 class SessionsController < ApplicationController
   def new
+    @users = User.all
   end
 
   def create
@@ -12,7 +13,7 @@ class SessionsController < ApplicationController
         redirect_to admin_home_path
       end
     else
-      render "new"
+      redirect_to '/'
     end
   end
 
