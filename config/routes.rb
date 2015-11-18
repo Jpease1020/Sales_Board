@@ -1,12 +1,13 @@
 Rails.application.routes.draw do
 
-  root "welcome#home"
+  # root "welcome#home"
 
-  get 'login'     => 'sessions#new'
-  post 'login'    => 'sessions#create'
+  get '/'     => 'sessions#new'
+  post '/'    => 'sessions#create'
   delete 'logout' => 'sessions#destroy'
 
   resources :sales
+  resources :users, only: [:show]
 
   namespace :admin do
     get 'home' => 'welcome#home'

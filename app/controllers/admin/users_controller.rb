@@ -12,6 +12,11 @@ class Admin::UsersController < Admin::BaseController
   end
 
   def show
+    display_month
+    @names = assistants_salespeople.pluck(:name)
+    @sales = Sale.where('extract(month  from created_at) = ? and user_id = ?', month_variable, params[:id]).order(created_at: :desc)
+    @sale = Sale.new
+    @salespeople = User.where(role: 1)
     @user = User.find_by(id: params[:id])
   end
 

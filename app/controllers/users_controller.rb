@@ -8,7 +8,10 @@ class UsersController < ApplicationController
   end
 
   def show
+    @sale = Sale.new
     @user = User.find(params[:id])
+    salespeople
+    @sales = Sale.where('extract(month  from created_at) = ? and user_id = ?', month_variable, params[:id]).order(created_at: :desc)
   end
 
   private
