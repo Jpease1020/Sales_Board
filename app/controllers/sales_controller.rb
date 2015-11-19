@@ -11,6 +11,7 @@ class SalesController < ApplicationController
   def create
     sale = Sale.new(sale_params)
     if sale.save
+      flash[:succss] = "sale was successfully entered into teh database"
       redirect_to action: 'index'
     else
       flash[:alert] = "sale not saved please enter all the information correctly"
@@ -26,8 +27,10 @@ class SalesController < ApplicationController
   def update
     sale = Sale.find(params[:id])
     if sale.update_attributes(sale_params)
+      flash[:success] = "sale was successfully updated"
       redirect_to sales_path
     else
+      flash[:danger] = "sale was not saved in the database, please try again"
       render "edit"
     end
   end

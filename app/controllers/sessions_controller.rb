@@ -13,6 +13,7 @@ class SessionsController < ApplicationController
         redirect_to admin_home_path
       end
     else
+      flash[:danger] = "Invalid login info"
       redirect_to '/'
     end
   end

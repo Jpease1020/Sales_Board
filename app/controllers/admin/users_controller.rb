@@ -6,8 +6,9 @@ class Admin::UsersController < Admin::BaseController
   def create
     user = User.new(user_params)
     unless user.save
-      flash[:error] = "The salesperson was not created, please try again"
+      flash[:danger] = "The salesperson was not created, please try again"
     end
+    flash[:success] = "The salesperson was created"
     redirect_to action: 'index'
   end
 
@@ -31,8 +32,13 @@ class Admin::UsersController < Admin::BaseController
 
   def update
     user = User.find(params[:id])
-    user.update_attributes(update_user_params)
-    redirect_to admin_users_path
+    if user.update_attributes(user_params)
+      flash[:success] = "user was successfully updated"
+      redirect_to admin_users_path
+    else
+      flash[:danger] = "user was not updated, please try again"
+      render 'edit'
+    end
   end
 
   def delete
