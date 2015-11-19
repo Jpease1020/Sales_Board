@@ -1,2 +1,4 @@
 <%= render 'admin/partials/admin_header' %>
-<h1 class='header'>Welcome Admin</h1>
+<h1 class='header'>Welcome <%= current_user.name %></h1>
+
+<%= render partial: 'layouts/sales_summary' %>

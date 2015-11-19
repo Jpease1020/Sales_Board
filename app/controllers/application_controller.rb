@@ -29,6 +29,8 @@ class ApplicationController < ActionController::Base
       @sales = Sale.where('extract(month  from created_at) = ? and user_id = ?', month_variable, current_user.id).order(created_at: :desc)
     elsif current_user.assistant?
       @sales = Sale.where('extract(month  from created_at) = ?', month_variable).where(user_id: assistants_salespeople).order(created_at: :desc)
+    elsif current_user.admin?
+      @sales = Sale.where('extract(month  from created_at) = ?', month_variable).order(created_at: :desc)
     end
   end
 
@@ -38,7 +40,7 @@ class ApplicationController < ActionController::Base
   end
 
   def month_variable
-    Date::MONTHNAMES.index(@display_month)
+    Date::MONTHNAMES.index(display_month)
   end
 
   def display_month
