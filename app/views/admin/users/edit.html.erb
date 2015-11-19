@@ -3,13 +3,15 @@
     <div class='panel'>
       <div class='panel-body'>
         <table style="width:100%">
+          <tr><td></td><td></td><td></td><td></td><td>Activated</td></tr>
           <tr>
           <%= form_for @user, url: admin_user_path do |f| %>
           <td><%= f.text_field :name, placeholder: "Name" %></td>
           <td><%= f.collection_select :assistant_id, @assistants, :id, :name, :prompt => 'Select Assistant' %></td>
           <td><%= f.text_field :password, placeholder: "Password" %></td>
           <td><%= f.text_field :password_confirmation, placeholder: "confirm password" %></td>
-          <td class="btn btn-primary"><%= f.submit "Update" %></td>
+          <th><%= f.select :activated, [true, false]%></th>
+          <td class="btn btn-primary"><%= f.submit %></td>
           <% end %>
           </tr>
       </div>

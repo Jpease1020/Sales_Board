@@ -18,7 +18,9 @@ class User < ActiveRecord::Base
     role == 3
   end
 
-
+  def activated?
+    activated
+  end
 
   def assistant_name
     User.find_by(id: self.assistant_id).name
