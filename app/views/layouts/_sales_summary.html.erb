@@ -1,4 +1,4 @@
-<div class='row'>
+<div class='row'>         <!-- add a new sale section -->
   <div class='col-md-12'>
     <div class='panel'>
       <div class='panel-body'>
@@ -24,7 +24,7 @@
   </div>
 </div>
 <br>
-<div class='row'>
+<div class='row'>  <!-- choose a different month to view salses data section -->
   <div class='col-md-3'>
     <div class='panel'>
       <div class='panel-body'>
@@ -41,7 +41,7 @@
   </div>
 </div>
 
-<% if current_user.assistant? %>
+<% if current_user.assistant? %>   <!-- choose a different salesperson to view sales data for -->
 <div>
   Choose salesperson to view sales
   <%= form_for :date, url: sales_path, method: "get" do |f| %>
@@ -50,7 +50,7 @@
   <% end %>
 </div>
 <% end %>
-<div class='row'>
+<div class='row'>   <!-- aggregate sales totals info section -->
   <div class='col-md-12'>
     <div class='panel'>
       <div class='panel-body'>
@@ -86,7 +86,7 @@
     </div>
   </div>
 </div>
-<div class='row'>
+<div class='row'>  <!-- sales summary data -->
   <div class='col-md-12'>
     <div class='panel'>
       <div class='panel-body'>

@@ -8,6 +8,9 @@
   job_title = "some job"
   quantity = rand(1000..99999)
   pages = rand(1..200)
+  width = rand(1..250)
+  length = rand(1..250)
+  adjusted_page_count = (pages * width / length)
   Sale.create!( user_id: user_id,
                 pages: pages,
                 quantity: quantity,
@@ -16,6 +19,9 @@
                 customer: customer,
                 mark_up: mark_up,
                 frequency: frequency,
-                single_sale: single_sale)
+                single_sale: single_sale,
+                width: width,
+                length: length,
+                adjusted_page_count: adjusted_page_count)
   Sale.last.update_attribute(:created_at, (Sale.last.id / 5).days.ago)
 end
