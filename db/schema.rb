@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151119172949) do
+ActiveRecord::Schema.define(version: 20151119221033) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -30,7 +30,7 @@ ActiveRecord::Schema.define(version: 20151119172949) do
     t.decimal  "single_sale"
     t.decimal  "width"
     t.decimal  "length"
-    t.decimal  "adjusted_page_count"
+    t.integer  "adjusted_page_count"
   end
 
   create_table "users", force: :cascade do |t|

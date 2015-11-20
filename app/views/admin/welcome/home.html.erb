@@ -1,4 +1,115 @@
 <%= render 'admin/partials/admin_header' %>
 <h1 class='header'>Welcome <%= current_user.name %></h1>
 
+<div class='col-md-8'>
+<!-- this is where the months sales info goes -->
 <%= render partial: 'layouts/sales_summary' %>
+</div>
+<h3 class='text-center'>Totals</h3>
+<div class='col-sm-4 col-md-4 col-lg-4'>
+  <div class='row'>  <!--  -->
+    <div class='col-sm-12 col-md-12 col-lg-12'>
+      <div class='panel'>
+        <div class='panel-body'>
+          <table class='table-striped table-bordered table-hover'>
+            <h3 class='text-center'>Performance</h3>
+              <tr>
+                <th>Monthly Goal</th>
+                <td>Work days</td>
+                <td></td>
+              </tr>
+              <tr>
+                <th>Daily Goal</th>
+                <td></td>
+                <td> </td>
+              </tr>
+              <tr>
+                <th>Month to Date Sales Goal</th>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <th>Work Days So Far</th>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <th>Total Sales to Date</th>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <th>Sales vs. Goal</th>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <th>Percent to Month Goal</th>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <th>Performance to Date</th>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <th>Beginning Markups</th>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <th>Sales per 1000 pages</th>
+                <td></td>
+                <td></td>
+              </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class='row'> <!-- this is where the 3 other boxes go -->
+    <div class='col-sm-12 col-md-12 col-lg-12'>
+      <div class='panel'>
+        <div class='panel-body'>
+          <table class= 'table-striped table-bordered table-hover'>
+            <h2>Monthly Totals</h2>
+            <tr>
+              <td>Frequency</td>
+              <td>Jobs</td>
+              <td>Annual Sales Est.</td>
+              <td>Mark Up</td>
+              <td>Pages</td>
+              <td>$/1000</td>
+            </tr>
+            <% @sales_by_frequency.each do |collection| %>
+              <% annual_sales = collection.sum("single_sale * frequency") %>
+              <% annual_sales_formated = number_to_currency(collection.sum("single_sale * frequency"), :precision => 0) %>
+              <% annual_pages = collection.sum(:pages) %>
+              <% sales_per_thousand = annual_sales / (annual_pages * 1000) %>
+            <tr>
+              <td><%= collection.first.frequency %></td>
+              <td><%= collection.count%></td>
+              <td><%= annual_sales_formated %></td>
+              <td><%= %></td>
+              <td><%= annual_pages %></td>
+              <td><%= number_to_currency(sales_per_thousand, :precision => 0) %></td>
+              <% end %>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class='row'>
+    <div class='col-sm-12 col-md-12 col-lg-12'>
+      <div class='panel'>
+        <div class='panel-body'>
+          <table class= 'table-striped table-bordered table-hover'>
+            <h2>Salesperson Sumaries</h2>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

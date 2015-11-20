@@ -70,4 +70,5 @@ class ApplicationController < ActionController::Base
       current_user.name
     end
   end
+
 end

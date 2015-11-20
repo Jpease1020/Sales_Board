@@ -1,39 +1,11 @@
-<div class='row'>         <!-- add a new sale section -->
-  <div class='col-md-12'>
-    <div class='panel'>
-      <div class='panel-body'>
-        <table class= 'table-striped table-bordered table-hover'>
-          <h3> Add a new Sale </h3>
-          <tr class= 'submission-table'>
-            <%= form_for @sale, url: sales_path do |f| %>
-            <th><%= f.collection_select :user_id, @salespeople, :id, :name, :prompt => "Select Salesperson" %></th>
-            <th><%= f.select :job_type, ["web", "digital"]%></th>
-            <th><%= f.text_field :job_title, placeholder: "job title"%></th>
-            <th><%= f.text_field :quantity, placeholder: "quantity"%></th>
-            <th>
-              <div><%= f.text_field :pages, placeholder: "pages" %></div>
-              <div><%= f.text_field :width, placeholder: "width" %></div>
-              <div><%= f.text_field :length, placeholder: "length" %></div>
-            </th>
-            <th><%= f.text_field :customer, placeholder: "customer"%></th>
-            <th><%= f.text_field :mark_up, placeholder: "mark up"%></th>
-            <th><%= f.text_field :single_sale, placeholder: "single sale"%></th>
-            <th><%= f.text_field :frequency, placeholder: "frequency"%></th>
-            <%= f.submit "Create Sale", class: "btn btn-primary btn-sm" %>
-            <% end %>
-          </tr>
-        </table>
-      </div>
-    </div>
-  </div>
-</div>
+<%= render partial: 'layouts/new_sale' if !current_user.admin? %>
 <br>
 <div class='row'>  <!-- choose a different month to view salses data section -->
-  <div class='col-md-3'>
+  <div class='col-sm-6 col-md-6 col-lg-6'>
     <div class='panel'>
       <div class='panel-body'>
         <div>
-          Choose month to view sales
+          <h3>Choose month to view sales</h3>
           <%= form_for :date, url: sales_path, method: "get" do |f| %>
             <%= f.select :month, months, :selected => @display_month %>
             <%= f.select :year, years, :selected => Time.now.strftime("%Y")%>
@@ -43,23 +15,22 @@
       </div>
     </div>
   </div>
-</div>
 
-<% if current_user.assistant? %>   <!-- choose a different salesperson to view sales data for -->
-<div>
-  Choose salesperson to view sales
-  <%= form_for :date, url: sales_path, method: "get" do |f| %>
-    <%= f.select :user, @names %>
-    <%= f.submit "Salesperson", class: "btn btn-primary"%>
+  <% if current_user.assistant? %>   <!-- choose a different salesperson to view sales data for -->
+  <div>
+    Choose salesperson to view sales
+    <%= form_for :date, url: sales_path, method: "get" do |f| %>
+      <%= f.select :user, @names %>
+      <%= f.submit "Salesperson", class: "btn btn-primary"%>
+    <% end %>
+  </div>
   <% end %>
-</div>
-<% end %>
-<div class='row'>   <!-- aggregate sales totals info section -->
-  <div class='col-md-12'>
+<!-- aggregate sales totals info section -->
+  <div class='col-sm-6 col-md-6 col-lg-6'>
     <div class='panel'>
       <div class='panel-body'>
         <table class= 'table-striped table-bordered table-hover'>
-          <h2>Total Sales for <%= @display_month %></h2>
+          <h3>Total Sales for <%= @display_month %></h3>
           <tr>
             <th></th>
             <th>Single Sale Total</th>
@@ -91,7 +62,7 @@
   </div>
 </div>
 <div class='row'>  <!--  -->
-  <div class='col-md-12'>
+  <div class='col-sm-12 col-md-12 col-m-12'>
     <div class='panel'>
       <div class='panel-body'>
         <table class= 'table-striped table-bordered table-hover'>

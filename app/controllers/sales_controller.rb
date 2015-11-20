@@ -11,7 +11,7 @@ class SalesController < ApplicationController
   def create
     sale = Sale.new(sale_params)
     if sale.save
-      flash[:succss] = "sale was successfully entered into teh database"
+      flash[:succss] = "sale was successfully entered into the database"
       redirect_to action: 'index'
     else
       flash[:alert] = "sale not saved please enter all the information correctly"
