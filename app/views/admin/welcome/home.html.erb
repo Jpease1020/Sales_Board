@@ -75,6 +75,32 @@
           <table class= 'table-striped table-bordered table-hover'>
             <h2>Monthly Totals</h2>
             <tr>
+              <th>Totals</th>
+              <td><%= @sales_by_frequency.inject(0) do |sum, collection| %> <!-- jobs -->
+                        <% sum + collection.count %>
+                    <% end %>
+              </td>
+              <td><% a = @sales_by_frequency.inject(0) do |sum, collection| %> <!-- annual sales -->
+
+                        <% sum + collection.sum("single_sale * frequency") %>
+                    <% end %>
+                    <%= number_to_currency(a, :precision => 0) %>
+              </td>
+              <td></td> <!-- mark up-->
+              <td><%= @sales_by_frequency.inject(0) do |sum, collection| %> <!-- pages -->
+                        <% sum + collection.sum(:pages) %>
+                    <% end %>
+              </td>
+              <td><%a = @sales_by_frequency.inject(0) do |sum, collection| %> <!-- $/1000  -->
+                  <% annual_sales = collection.sum("single_sale * frequency") %>
+                  <% annual_pages = collection.sum(:pages) %>
+                  <% sales_per_thousand = annual_sales / (annual_pages * 1000) %>
+                        <% sum + sales_per_thousand %>
+                    <% end %>
+                    <%= number_to_currency(a, precision: 0) %>
+              </td>
+            </tr>
+            <tr>
               <td>Frequency</td>
               <td>Jobs</td>
               <td>Annual Sales Est.</td>
