@@ -1,6 +1,10 @@
 class SessionsController < ApplicationController
   def new
     @users = User.all
+    if current_user
+      redirect_to  user_home_page
+    end
+
   end
 
   def create

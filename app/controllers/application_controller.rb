@@ -71,4 +71,11 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def user_home_page
+    if current_user && current_user.admin?
+      admin_home_path
+    elsif current_user
+      sales_path
+    end
+  end
 end
