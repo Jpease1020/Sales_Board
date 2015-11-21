@@ -1,66 +1,67 @@
+<%= Date.today %>
 <%= render 'admin/partials/admin_header' %>
-<h1 class='header'>Welcome <%= current_user.name %></h1>
+<h1 id='top' class='header'>Welcome <%= current_user.name %></h1>
 
 <div class='col-md-8'>
 <!-- this is where the months sales info goes -->
 <%= render partial: 'layouts/sales_summary' %>
+
 </div>
-<h3 class='text-center'>Totals</h3>
 <div class='col-sm-4 col-md-4 col-lg-4'>
+  <h3 class='text-center'>Please enter goal for the month</h3>
+  <%= form_tag do |f| %>
+  <%= text_field_tag "goal" %>
+  <%= submit_tag "Enter goal for the month" %>
+  <% end %>
+  <h3 class='text-center'>Totals</h3>
   <div class='row'>  <!--  -->
     <div class='col-sm-12 col-md-12 col-lg-12'>
       <div class='panel'>
         <div class='panel-body'>
           <table class='table-striped table-bordered table-hover'>
-            <h3 class='text-center'>Performance</h3>
+            <h3>Performance</h3>
               <tr>
                 <th>Monthly Goal</th>
-                <td>Work days</td>
-                <td></td>
+                <td><%=number_to_currency(@goal, precision: 0)%> </td>
               </tr>
               <tr>
-                <th>Daily Goal</th>
-                <td></td>
-                <td> </td>
-              </tr>
-              <tr>
-                <th>Month to Date Sales Goal</th>
-                <td></td>
-                <td></td>
+                <th>Workdays this month</th>
+                <td><%= @business_days %></td>
               </tr>
               <tr>
                 <th>Work Days So Far</th>
-                <td></td>
-                <td></td>
+                <td><%=@work_days_so_far%></td>
+              </tr>
+              <tr>
+                <th>Daily Goal</th>
+                <td><%=number_to_currency(@daily_goal, precision: 0)%></td>
+              </tr>
+              <tr>
+                <th>Month to Date Sales Goal</th>
+                <td><%=number_to_currency(@month_to_date_sales_goal, precision: 0)%></td>
               </tr>
               <tr>
                 <th>Total Sales to Date</th>
-                <td></td>
-                <td></td>
+                <td><%=number_to_currency(@sales_to_date, precision: 0)%></td>
               </tr>
               <tr>
                 <th>Sales vs. Goal</th>
-                <td></td>
-                <td></td>
+                <td><%=number_to_currency(@sale_vs_goal, precision: 0)%> Redo this</td>
               </tr>
               <tr>
                 <th>Percent to Month Goal</th>
-                <td></td>
                 <td></td>
               </tr>
               <tr>
                 <th>Performance to Date</th>
                 <td></td>
-                <td></td>
               </tr>
               <tr>
                 <th>Beginning Markups</th>
                 <td></td>
-                <td></td>
               </tr>
               <tr>
                 <th>Sales per 1000 pages</th>
-                <td></td>
                 <td></td>
               </tr>
           </table>
@@ -73,7 +74,7 @@
       <div class='panel'>
         <div class='panel-body'>
           <table class= 'table-striped table-bordered table-hover'>
-            <h2>Monthly Totals</h2>
+            <h3>Monthly Totals</h3>
             <tr>
               <th>Totals</th>
               <td><%= @sales_by_frequency.inject(0) do |sum, collection| %> <!-- jobs -->
@@ -101,12 +102,12 @@
               </td>
             </tr>
             <tr>
-              <td>Frequency</td>
-              <td>Jobs</td>
-              <td>Annual Sales Est.</td>
-              <td>Mark Up</td>
-              <td>Pages</td>
-              <td>$/1000</td>
+              <th>Frequency</th>
+              <th>Jobs</th>
+              <th>Annual Sales Est.</th>
+              <th>Markup</th>
+              <th>Pages</th>
+              <th>$/1000</th>
             </tr>
             <% @sales_by_frequency.each do |collection| %>
               <% annual_sales = collection.sum("single_sale * frequency") %>
@@ -132,10 +133,32 @@
       <div class='panel'>
         <div class='panel-body'>
           <table class= 'table-striped table-bordered table-hover'>
-            <h2>Salesperson Sumaries</h2>
+            <h3>Salesperson Sumaries</h3>
+            <tr>
+              <th>Rep</th>
+              <th>Jobs</th>
+              <th>Sales</th>
+              <th>Markup</th>
+              <th>Pages</th>
+              <th>$/1000</th>
+            </tr>
+            <% @salespeople.each do |s| %>
+            <% annual_sales = s.sales.sum("single_sale * frequency") %>
+            <% annual_pages = s.sales.sum(:pages) %>
+            <% sales_per_thousand = annual_sales / (annual_pages * 1000) %>
+            <tr>
+              <th><%= s.name %></th>
+              <td><%= s.sales.count %></td>
+              <td><%= number_to_currency(s.sales.sum(:single_sale), precision: 0) %></td>
+              <td></td>
+              <td><%= s.sales.sum(:pages) %></td>
+              <td><%= number_to_currency(sales_per_thousand, :precision => 0) %></td>
+            </tr>
+            <% end %>
           </table>
         </div>
       </div>
     </div>
   </div>
 </div>
+<a href="#top">Go to the top of the page</a>

@@ -11,6 +11,7 @@ Rails.application.routes.draw do
 
   namespace :admin do
     get 'home' => 'welcome#home'
+    post 'home' => 'welcome#home'
     resources :users
   end
 end
