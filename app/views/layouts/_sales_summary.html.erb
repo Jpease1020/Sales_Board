@@ -29,7 +29,7 @@
   <div class='col-sm-6 col-md-6 col-lg-6'>
     <div class='panel'>
       <div class='panel-body'>
-        <table class= 'table-striped table-bordered table-hover'>
+        <table id="table1" class= 'table-striped table-bordered table-hover'>
           <h3>Total Sales for <%= @display_month %></h3>
           <tr>
             <th></th>
@@ -52,7 +52,7 @@
             <td></td>
           </tr>
           <tr>
-              <td><h3><strong>All Sales</strong></h3></td>
+              <td><h4><strong>All Sales</strong></h4></td>
               <td align="right"><strong><%=number_to_currency(@sales.sum(:single_sale), :precision => 0)%></strong></td>
               <td align="right"><strong><%=number_to_currency(@sales.sum("single_sale * frequency"), :precision => 0)%></strong></td>
             </tr>
@@ -65,7 +65,7 @@
   <div class='col-sm-12 col-md-12 col-m-12'>
     <div class='panel'>
       <div class='panel-body'>
-        <table class= 'table-striped table-bordered table-hover'>
+        <table id = "main_table" class= 'table-striped table-bordered table-hover'>
           <thead><h3>Current Sales Summary for chose salespeople for the month of <%= @display_month %><h3></thead>
             <tr>
               <th>Sales Person</th>
