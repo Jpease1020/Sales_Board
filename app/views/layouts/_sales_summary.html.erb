@@ -65,20 +65,19 @@
   <div class='col-sm-12 col-md-12 col-m-12'>
     <div class='panel'>
       <div class='panel-body'>
-        <table id = "main_table" class= 'table-striped table-bordered table-hover'>
-          <thead><h3>Current Sales Summary for chose salespeople for the month of <%= @sales_output.display_month %><h3></thead>
+        <table width='100%' id="main_table" class='table-striped table-bordered table-hover'>
+          <thead><h3><%= @sales_output.display_month %><h3></thead>
             <tr>
-              <th>Sales Person</th>
+              <th>Salesperson</th>
               <th>Date</th>
-              <th>Job Type</th>
-              <th>Job Title</th>
+              <th>Type</th>
+              <th>Title</th>
               <th align="right">Quantity</th>
-              <th align="right">Pages</th>
-              <th align="right">Adjusted Page Count</th>
-              <th align="right">Customer</th>
-              <th align="right">Mark Up</th>
-              <th align="right">Single Sale Amt</th>
-              <th align="right">Frequency</th>
+              <th align="right">Adj Page</th>
+              <th align="right">Cust#</th>
+              <th align="right">Markup</th>
+              <th align="right">Sale</th>
+              <th align="right">Freq</th>
               <th align="right">Annual Sales</th>
               <th colspan="2"></th>
             </tr>
@@ -86,19 +85,21 @@
               <% @sales_output.sales.each do |sale|%>
             <tr class="table-text">
               <td><%=sale.user.name%></td>
-              <td><%=sale.created_at.strftime("%^b %d, %Y")%></td>
+              <td><%=link_to sale.created_at.strftime("%m/%d/%Y"), edit_sale_path(sale) %></td>
               <td><%=sale.job_type%></td>
               <td><%=sale.job_title%></td>
               <td align="right"><%=number_with_delimiter(sale.quantity)%></td>
-              <td align="right"><%=sale.pages%></td>
               <td align="right"><%=sale.adjusted_page_count%></td>
               <td align="right"><%=sale.customer%></td>
               <td align="right"><%=sale.mark_up%> % </td>
-              <td align="right"><%=number_to_currency(sale.single_sale)%></td>
+              <td align="right"><%=number_to_currency(sale.single_sale, precision: 0)%></td>
               <td align="right"><%=sale.frequency%></td>
-              <td align="right"><%=number_to_currency((sale.frequency * sale.single_sale), :precision => 0)%></td>
+              <td align="right"><%=number_to_currency((sale.frequency * sale.single_sale), precision: 0)%></td>
               <td align="right"><%=link_to "edit", edit_sale_path(sale) %> </td>
-              <td align="right"><%=link_to "delete", sale_path(sale), method: :delete %></td>
+              <td align="right"><%=link_to sale_path(sale), data: {confirm: "Are you sure?"}, method: :delete, class: "btn btn-xs btn-danger" do %>
+                                  <i class="glyphicon glyphicon-trash"></i>
+                                <% end %>
+              </td>
             </tr>
               <% end %>
         </table>

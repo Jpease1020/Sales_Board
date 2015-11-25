@@ -1,6 +1,5 @@
 <%= Date.today %>
 <%= render 'admin/partials/admin_header' %>
-<h1 id='top' class='header'>Welcome <%= current_user.name %></h1>
 
 <div class='col-md-8'>
 <!-- this is where the months sales info goes -->
@@ -8,11 +7,6 @@
 
 </div>
 <div class='col-sm-4 col-md-4 col-lg-4'>
-  <h3 class='text-center'>Entre Daily Goal</h3>
-  <%= form_tag do |f| %>
-  <%= text_field_tag "goal" %>
-  <%= submit_tag "Submit Daily Goal" %>
-  <% end %>
   <h3 class='text-center'>Totals</h3>
   <div class='row'>  <!--  -->
     <div class='col-sm-12 col-md-12 col-lg-12'>
@@ -133,7 +127,7 @@
       <div class='panel'>
         <div class='panel-body'>
           <table id="table3" class='table-striped table-bordered table-hover'>
-            <h3>Salesperson Sumaries</h3>
+            <h3>Salesperson Summaries</h3>
             <tr>
               <th>Rep</th>
               <th>Jobs</th>
@@ -152,7 +146,7 @@
               <td><%= number_to_currency(s.sales.sum(:single_sale), precision: 0) %></td>
               <td></td>
               <td><%= s.sales.sum(:pages) %></td>
-              <td><%= number_to_currency(sales_per_thousand, :precision => 0) %></td>
+              <td><%= number_to_currency(sales_per_thousand, :precision => 0) unless sales_per_thousand.nan?  %></td>
             </tr>
             <% end %>
           </table>
@@ -160,5 +154,10 @@
       </div>
     </div>
   </div>
+  <h3 class='text-center'>Entre Daily Goal</h3>
+  <%= form_tag do |f| %>
+  <%= text_field_tag "goal" %>
+  <%= submit_tag "Submit Daily Goal" %>
+  <% end %>
 </div>
 <a href="#top">Go to the top of the page</a>
