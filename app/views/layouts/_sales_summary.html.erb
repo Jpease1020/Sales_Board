@@ -7,7 +7,7 @@
         <div>
           <h3>Choose month to view sales</h3>
           <%= form_for :date, url: sales_path, method: "get" do |f| %>
-            <%= f.select :month, months, :selected => @display_month %>
+            <%= f.select :month, months, :selected => @sales_output.display_month %>
             <%= f.select :year, years, :selected => Time.now.strftime("%Y")%>
             <%= f.submit "Choose Month/Year", class: "btn btn-primary"%>
           <% end %>
@@ -30,7 +30,7 @@
     <div class='panel'>
       <div class='panel-body'>
         <table id="table1" class= 'table-striped table-bordered table-hover'>
-          <h3>Total Sales for <%= @display_month %></h3>
+          <h3>Total Sales for <%= @sales_output.display_month %></h3>
           <tr>
             <th></th>
             <th>Single Sale Total</th>
@@ -38,13 +38,13 @@
           </tr>
           <tr>
             <td><strong>Web Sale Totals</strong></td>
-            <td align="right"><strong><%=number_to_currency(@sales.where(job_type: "web").sum(:single_sale), :precision => 0)%></strong></td>
-            <td align="right"><strong><%=number_to_currency(@sales.where(job_type: "web").sum("single_sale * frequency"), :precision => 0)%></strong></td>
+            <td align="right"><strong><%=number_to_currency(@sales_output.sales.where(job_type: "web").sum(:single_sale), :precision => 0)%></strong></td>
+            <td align="right"><strong><%=number_to_currency(@sales_output.sales.where(job_type: "web").sum("single_sale * frequency"), :precision => 0)%></strong></td>
           </tr>
           <tr>
             <td><strong>Digital Sale Totals</strong></td>
-            <td align="right"><strong><%=number_to_currency(@sales.where(job_type: "digital").sum(:single_sale), :precision => 0)%></strong></td>
-            <td align="right"><strong><%=number_to_currency(@sales.where(job_type: "digital").sum("single_sale * frequency"), :precision => 0)%></strong></td>
+            <td align="right"><strong><%=number_to_currency(@sales_output.sales.where(job_type: "digital").sum(:single_sale), :precision => 0)%></strong></td>
+            <td align="right"><strong><%=number_to_currency(@sales_output.sales.where(job_type: "digital").sum("single_sale * frequency"), :precision => 0)%></strong></td>
           </tr>
           <tr>
             <td></td>
@@ -53,8 +53,8 @@
           </tr>
           <tr>
               <td><h4><strong>All Sales</strong></h4></td>
-              <td align="right"><strong><%=number_to_currency(@sales.sum(:single_sale), :precision => 0)%></strong></td>
-              <td align="right"><strong><%=number_to_currency(@sales.sum("single_sale * frequency"), :precision => 0)%></strong></td>
+              <td align="right"><strong><%=number_to_currency(@sales_output.sales.sum(:single_sale), :precision => 0)%></strong></td>
+              <td align="right"><strong><%=number_to_currency(@sales_output.sales.sum("single_sale * frequency"), :precision => 0)%></strong></td>
             </tr>
         </table>
       </div>
@@ -66,7 +66,7 @@
     <div class='panel'>
       <div class='panel-body'>
         <table id = "main_table" class= 'table-striped table-bordered table-hover'>
-          <thead><h3>Current Sales Summary for chose salespeople for the month of <%= @display_month %><h3></thead>
+          <thead><h3>Current Sales Summary for chose salespeople for the month of <%= @sales_output.display_month %><h3></thead>
             <tr>
               <th>Sales Person</th>
               <th>Date</th>
@@ -83,7 +83,7 @@
               <th colspan="2"></th>
             </tr>
           </thead>
-              <% @sales.each do |sale|%>
+              <% @sales_output.sales.each do |sale|%>
             <tr class="table-text">
               <td><%=sale.user.name%></td>
               <td><%=sale.created_at.strftime("%^b %d, %Y")%></td>

@@ -8,10 +8,10 @@
 
 </div>
 <div class='col-sm-4 col-md-4 col-lg-4'>
-  <h3 class='text-center'>Please enter goal for the month</h3>
+  <h3 class='text-center'>Entre Daily Goal</h3>
   <%= form_tag do |f| %>
   <%= text_field_tag "goal" %>
-  <%= submit_tag "Enter goal for the month" %>
+  <%= submit_tag "Submit Daily Goal" %>
   <% end %>
   <h3 class='text-center'>Totals</h3>
   <div class='row'>  <!--  -->
@@ -22,15 +22,15 @@
             <h3>Performance</h3>
               <tr>
                 <th>Monthly Goal</th>
-                <td><%=number_to_currency(@goal, precision: 0)%> </td>
+                <td><%=number_to_currency(@monthly_goal, precision: 0)%> </td>
               </tr>
               <tr>
                 <th>Workdays this month</th>
-                <td><%= @business_days %></td>
+                <td><%= @sales_output.business_days %></td>
               </tr>
               <tr>
                 <th>Work Days So Far</th>
-                <td><%=@work_days_so_far%></td>
+                <td><%=@sales_output.work_days_so_far%></td>
               </tr>
               <tr>
                 <th>Daily Goal</th>
@@ -77,22 +77,22 @@
             <h3>Monthly Totals</h3>
             <tr>
               <th>Totals</th>
-              <td><%= @sales_by_frequency.inject(0) do |sum, collection| %> <!-- jobs -->
+              <td><%= @sales_output.sales_by_frequency.inject(0) do |sum, collection| %> <!-- jobs -->
                         <% sum + collection.count %>
                     <% end %>
               </td>
-              <td><% a = @sales_by_frequency.inject(0) do |sum, collection| %> <!-- annual sales -->
+              <td><% a = @sales_output.sales_by_frequency.inject(0) do |sum, collection| %> <!-- annual sales -->
 
                         <% sum + collection.sum("single_sale * frequency") %>
                     <% end %>
                     <%= number_to_currency(a, :precision => 0) %>
               </td>
               <td></td> <!-- mark up-->
-              <td><%= @sales_by_frequency.inject(0) do |sum, collection| %> <!-- pages -->
+              <td><%= @sales_output.sales_by_frequency.inject(0) do |sum, collection| %> <!-- pages -->
                         <% sum + collection.sum(:pages) %>
                     <% end %>
               </td>
-              <td><%a = @sales_by_frequency.inject(0) do |sum, collection| %> <!-- $/1000  -->
+              <td><%a = @sales_output.sales_by_frequency.inject(0) do |sum, collection| %> <!-- $/1000  -->
                   <% annual_sales = collection.sum("single_sale * frequency") %>
                   <% annual_pages = collection.sum(:pages) %>
                   <% sales_per_thousand = annual_sales / (annual_pages * 1000) %>
@@ -109,7 +109,7 @@
               <th>Pages</th>
               <th>$/1000</th>
             </tr>
-            <% @sales_by_frequency.each do |collection| %>
+            <% @sales_output.sales_by_frequency.each do |collection| %>
               <% annual_sales = collection.sum("single_sale * frequency") %>
               <% annual_sales_formated = number_to_currency(collection.sum("single_sale * frequency"), :precision => 0) %>
               <% annual_pages = collection.sum(:pages) %>
@@ -142,7 +142,7 @@
               <th>Pages</th>
               <th>$/1000</th>
             </tr>
-            <% @salespeople.each do |s| %>
+            <% @sales_output.salespeople.each do |s| %>
             <% annual_sales = s.sales.sum("single_sale * frequency") %>
             <% annual_pages = s.sales.sum(:pages) %>
             <% sales_per_thousand = annual_sales / (annual_pages * 1000) %>

@@ -10,8 +10,8 @@ Rails.application.routes.draw do
   resources :users, only: [:show]
 
   namespace :admin do
-    get 'home' => 'welcome#home'
-    post 'home' => 'welcome#home'
+    get '/' => 'display#index'
+    post '/' => 'display#index'
     resources :users
   end
 end

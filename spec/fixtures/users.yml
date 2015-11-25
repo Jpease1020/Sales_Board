@@ -1,0 +1,72 @@
+1:
+  id: 1
+  name: Admin
+  password: adminpassword
+  password_digest:
+  role: 3
+  activated: true
+
+
+2:
+  id: 2
+  name: Admin2
+  password: adminpassword2
+  password_digest:
+  role: 3
+  activated: true
+
+3:
+  id: 3
+  name: assistant
+  password: assistpassword
+  password_digest:
+  role: 2
+  activated: true
+
+4:
+  id: 4
+  name: assistant2
+  password: assistpassword2
+  password_digest:
+  role: 2
+  activated: true
+
+5:
+  id: 5
+  name: salesman1
+  password: sales1
+  password_digest:
+  role: 1
+  activated: true
+
+6:
+  id: 6
+  name: salesman2
+  password: sales2
+  password_digest:
+  role: 1
+  activated: true
+
+7:
+  id: 7
+  name: salesman3
+  password: sales3
+  password_digest:
+  role: 1
+  activated: true
+
+8:
+  id: 8
+  name: salesman4
+  password: sales4
+  password_digest:
+  role: 1
+  activated: true
+
+9:
+  id: 9
+  name: salesman5
+  password: sales5
+  password_digest:
+  role: 1
+  activated: false

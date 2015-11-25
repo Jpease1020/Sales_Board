@@ -24,40 +24,27 @@ class ApplicationController < ActionController::Base
     session[:user_id] == nil
   end
 
-    def sales_for_display
-    if current_user.salesperson?
-      @sales = Sale.where('extract(month  from created_at) = ? and user_id = ?', month_variable, current_user.id).order(created_at: :desc)
-    elsif current_user.assistant?
-      @sales = Sale.where('extract(month  from created_at) = ?', month_variable).where(user_id: assistants_salespeople).order(created_at: :desc)
-    elsif current_user.admin?
-      @sales = Sale.where('extract(month  from created_at) = ?', month_variable).order(created_at: :desc)
-    end
-  end
-
-  def sale_month
-    month = params[:month]
-    Time.now
-  end
-
   def month_variable
     Date::MONTHNAMES.index(display_month)
   end
 
   def display_month
     if params[:date] == nil
-      @display_month = Time.now.strftime("%B")
+      Time.now.strftime("%B")
     else
-      @display_month = params[:date][:month]
+      params[:date][:month]
     end
   end
+  # def sale_month
+  #   month = params[:month]
+  #   Time.now
+  # end
 
   def salespeople
     @salespeople = User.where(role: 1)
   end
 
-  def assistants_salespeople
-    User.where(assistant_id: current_user.id)
-  end
+
 
   def assistants_salespeoples_names
     @names = assistants_salespeople.pluck(:name)

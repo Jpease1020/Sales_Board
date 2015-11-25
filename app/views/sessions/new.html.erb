@@ -8,7 +8,7 @@
           <div class='col-md-4' id="names">
             <table style="width:50%">
               <%= form_for :user do |f| %>
-              <%= f.collection_select :name, @users, :name, :name %>
+              <%= f.collection_select :id, @users, :id, :name %>
               <%= f.password_field :password, placeholder: "Password" %>
               <%= f.submit "Login", class: "btn btn-primary" %>
               <% end %>

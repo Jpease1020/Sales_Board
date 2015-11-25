@@ -1,0 +1,17 @@
+<% 1.upto(200) do |i| %>
+fix_<%= i %>:
+  id: <%= i %>
+  user_id: <%= rand(5..9) %>
+  pages: <%= rand(1..200) %>
+  quantity: <%= rand(1000..99999) %>
+  job_title: <%= ["web", "digital"].sample %>
+  job_type: <%= "some job" %>
+  customer: <%= %>
+  mark_up: <%= rand(1..99) %>
+  frequency: <%= rand(1..100) %>
+  single_sale: <%= rand(1..1000000).to_i %>
+  width: <%= rand(1..250) %>
+  length: <%= rand(1..250) %>
+  adjusted_page_count: <%= (pages * width / length) %>
+  created_at: <%= (Sale.last.id / 5).days.ago) %>
+<% end %>

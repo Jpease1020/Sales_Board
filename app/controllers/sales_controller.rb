@@ -2,7 +2,7 @@ class SalesController < ApplicationController
 
   def index
     @sale = Sale.new
-    display_month
+    @sales_output = SalesPresenter.new(params)
     salespeople
     assistants_salespeoples_names
     sales_for_display
