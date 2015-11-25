@@ -19,6 +19,7 @@ class Admin::UsersController < Admin::BaseController
 
   def show
     @sale = Sale.new
+    @sales_output = SalesPresenter.new(params, current_user)
     @salespeople = User.where(role: 1)
     display_month
     @sales = Sale.where('extract(month  from created_at) = ? and user_id = ?', month_variable, params[:id]).order(created_at: :desc)

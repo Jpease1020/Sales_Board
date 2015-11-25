@@ -51,6 +51,13 @@ class SalesPresenter < ActiveRecord::Base
                             month_variable).pluck(:frequency).uniq.sort
   end
 
+
+
+
+
+
+
+
   def sales_by_frequency
      selected_month_frequency_list.map do |frequency|
        Sale.where('extract(month from created_at) = ? and frequency = ?', month_variable, frequency)

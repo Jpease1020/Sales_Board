@@ -24,6 +24,17 @@ class ApplicationController < ActionController::Base
     session[:user_id] == nil
   end
 
+  def sales_for_display
+    sales = Sale.where('extract(month  from created_at) = ?', month_variable)
+    if current_user.salesperson?
+      Sale.where('extract(month  from created_at) = ? and user_id = ?', month_variable, current_user.id).order(created_at: :desc)
+    elsif current_user.assistant?
+      sales.where(user_id: assistants_salespeople).order(created_at: :desc)
+    elsif current_user.admin?
+      sales.order(created_at: :desc)
+    end
+  end
+
   def month_variable
     Date::MONTHNAMES.index(display_month)
   end
@@ -44,7 +55,9 @@ class ApplicationController < ActionController::Base
     @salespeople = User.where(role: 1)
   end
 
-
+  def assistants_salespeople
+    User.where(assistant_id: current_user.id)
+  end
 
   def assistants_salespeoples_names
     @names = assistants_salespeople.pluck(:name)
@@ -60,7 +73,7 @@ class ApplicationController < ActionController::Base
 
   def user_home_page
     if current_user && current_user.admin?
-      admin_home_path
+      admin_path
     elsif current_user
       sales_path
     end

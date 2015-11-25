@@ -14,7 +14,7 @@ class SessionsController < ApplicationController
       if user.role < 3
         redirect_to sales_path
       else
-        redirect_to admin_home_path
+        redirect_to admin_path
       end
     else
       flash[:danger] = "Invalid login info"
