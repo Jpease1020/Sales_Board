@@ -133,7 +133,7 @@
       <div class='panel'>
         <div class='panel-body'>
           <table id="table3" class='table-striped table-bordered table-hover'>
-            <h3>Salesperson Sumaries</h3>
+            <h3>Salesperson Summaries</h3>
             <tr>
               <th>Rep</th>
               <th>Jobs</th>
@@ -152,7 +152,7 @@
               <td><%= number_to_currency(s.sales.sum(:single_sale), precision: 0) %></td>
               <td></td>
               <td><%= s.sales.sum(:pages) %></td>
-              <td><%= number_to_currency(sales_per_thousand, :precision => 0) %></td>
+              <td><%= number_to_currency(sales_per_thousand, :precision => 0) unless sales_per_thousand.nan? %></td>
             </tr>
             <% end %>
           </table>

@@ -6,9 +6,9 @@ class Admin::WelcomeController < Admin::BaseController
     @salespeople = User.where(role: 1)
     @display_month = display_month
     selected_month_frequency_list = Sale.where('extract(month  from created_at) = ?',
-                              month_variable).order(created_at: :desc).pluck(:frequency)
+                              month_variable).pluck(:frequency).uniq.sort
     @sales_by_frequency =  selected_month_frequency_list.map do |frequency|
-      Sale.where('extract(month  from created_at) = ? and frequency = ?', month_variable, frequency).order(created_at: :desc)
+      Sale.where('extract(month from created_at) = ? and frequency = ?', month_variable, frequency)
     end
     salespeople
     @business_days = (Date.today.at_beginning_of_month..Date.today.at_end_of_month).count {|day| day unless day.saturday? || day.sunday? }
@@ -16,7 +16,7 @@ class Admin::WelcomeController < Admin::BaseController
     @work_days_so_far = (Date.today.at_beginning_of_month..Date.today).count {|day| day unless day.saturday? || day.sunday? }
     @month_to_date_sales_goal = @daily_goal * @work_days_so_far
     @sales_to_date = Sale.where('extract(month  from created_at) = ?', month_variable).order(created_at: :desc).sum(:single_sale)
-    @sale_vs_goal = (@goal.to_i * -1) + @sales_to_date 
+    @sale_vs_goal = (@goal.to_i * -1) + @sales_to_date
   end
 end
 
